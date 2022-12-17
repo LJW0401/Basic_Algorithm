@@ -8,7 +8,7 @@
 
 [算法·进阶石（algorithm-stone）](https://github.com/acm-clan/algorithm-stone.git)
 
-[Magic-Algorithm](https://github.com/verticallimit/Magic-Algorithm.git) 算法竞赛复习全书(退役无聊写的)
+[Magic-Algorithm](https://github.com/verticallimit/Magic-Algorithm.git) 算法竞赛复习全书(某大佬退役后无聊写的)
 
 
 ## 一些算法模板
