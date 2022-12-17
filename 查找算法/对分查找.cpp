@@ -1,6 +1,6 @@
 #include<stdio.h>
 
-int find_A(int a[],int n,int value,int reverse=0){//基础版本
+int find_baisc(int a[],int n,int value,int reverse=0){//基础版本
 	int sign;
 	if(reverse==0)sign=1;
 	else sign=-1;
@@ -26,5 +26,5 @@ int main(){
 		printf("%d ",a[i]);
 	}printf("\n");
 	
-	printf("%d",find_A(a,10,13));
+	printf("%d",find_baisc(a,10,13));
 }
