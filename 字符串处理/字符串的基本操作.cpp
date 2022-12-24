@@ -3,33 +3,46 @@
 
 /*插入字符操作*/
 void Char_Insert(char str[],char ch,long pos){
-	char tmp[10001];
-	strcpy(tmp,str+pos);
+	for(long i=strlen(str)+1;i>pos;i--){
+		str[i]=str[i-1];
+	}
 	str[pos]=ch;
-	strcpy(str+pos+1,tmp);
+	
 }
 
 /*插入字符串操作*/
-void Str_Insert(char str[],char str_[],long pos){
-	char tmp[10001];
-	strcpy(tmp,str+pos);
-	strcpy(str+pos,str_);
-	strcpy(str+pos+strlen(str_),tmp);
+void Str_Insert(char str[],char strIn[],long pos){
+	long lenOr=strlen(str);
+	long lenIn=strlen(strIn);
+	for(long i=lenOr+lenIn;i>=pos+lenIn;i--){
+		str[i]=str[i-lenIn];
+	}
+	for(long i=pos;i<pos+lenIn;i++){
+		str[i]=strIn[i-pos];
+	}
 }
 
 /*删除字符操作*/
 void Char_Delete_Pos(char str[],long pos){
-	strcpy(str+pos,str+pos+1);
+	long len=strlen(str);
+	for(long i=pos;i<len;i++){
+		str[i]=str[i+1];
+	}
 }
 
 /*删除字符串操作*/
 void Str_Delete_Pos(char str[],long pos,long length){
-	strcpy(str+pos,str+pos+length);
+	long len=strlen(str);
+	for(long i=pos;i<=len-length+1;i++){
+		str[i]=str[i+length];
+	}
 }
 
 /*取字符串操作*/
 void Mid(char to[],char from[],long pos,long length){
-	strcpy(to,from+pos);
+	for(long i=0;i<length;i++){
+		to[i]=from[pos+i];
+	}
 	to[length]='\0';
 }
 
