@@ -1,76 +1,99 @@
 #include<stdio.h>
 #include<time.h>
 #include<stdlib.h>
-void Sort_Quick(int a[], int l,int r, int reverse = 0){
-	int sign;
-	if(reverse==0)sign=1;
-	else sign=-1;
-	
-	int i=l,j=r;
-	int key=a[(l+r)/2];
+
+void Sort_Quick(int a[], long l,long r){
+	long i=l,j=r;
+	long key=a[(l+r)/2];
 	while(i<=j){
-		while(sign*a[i]<sign*key)
+		while(a[i]<key)
 			i++;
-		while(sign*a[j]>sign*key)
+		while(a[j]>key)
 			j--;
 		if(i<=j){
 			int t=a[i];a[i]=a[j];a[j]=t;
 			i++;j--;
 		}
 	}
-	if(l<j) Sort_Quick(a,l,j,reverse);
-	if(r>i) Sort_Quick(a,i,r,reverse);
+	if(l<j) Sort_Quick(a,l,j);
+	if(r>i) Sort_Quick(a,i,r);
 }
 
 
-void Sort_Bubble(int a[], int n, int reverse = 0){
-	int sign;
-	if(reverse==0)sign=1;
-	else sign=-1;
+void Sort_Bubble(int a[], long n){
+	int flag=0;
 	
-	for(int i=0;i<n-1;i++){
-		for(int j=n-1;j>i;j--){
-			if(sign*a[j-1]>sign*a[j]){
-				int t=a[j];a[j]=a[j-1];a[j-1]=t;
+	long l=0,r=n-1;
+	while(l<r){
+		for(long i=l;i<r;i++){
+			if(a[i]>a[i+1]){
+				int t=a[i];a[i]=a[i+1];a[i+1]=t;
+				flag=1;
 			}
 		}
-	}
-}
-
-
-void Sort_Choose(int a[], int n, int reverse = 0){
-	int sign;
-	if(reverse==0)sign=1;
-	else sign=-1;
-	
-	for(int i=0;i<n-1;i++){
-		int k = i;
-		for(int j=i+1;j<n;j++){
-			if(sign*a[k]>sign*a[j]){
-				k=j;
+		r--;
+		for(long i=r-1;i>=l;i--){
+			if(a[i]>a[i+1]){
+				int t=a[i];a[i]=a[i+1];a[i+1]=t;
+				flag=1;
 			}
 		}
-		if(k!=i){
-			int t=a[i];a[i]=a[k];a[k]=t;
-		}
+		l++;
+		if(!flag) break;
 	}
 }
 
 
-void Sort_Insert(int a[], int n, int reverse = 0){
-	int sign;
-	if(reverse==0)sign=1;
-	else sign=-1;
-	
-	for(int i=0;i<n;i++){
-		int j=i;
-		while(j>0 && sign*a[j]<sign*a[j-1]){
-			int t=a[j-1];a[j-1]=a[j];a[j]=t;
-			j--;
+void Sort_Choose(int a[], long n){
+	long l=0,r=n-1;
+	while(l<r){
+		long p=l,q=r;
+		
+		for(long i=l;i<=r;i++){
+			if(a[p]>a[i]){
+				p=i;
+			}
+			if(a[q]<a[i]){
+				q=i;
+			}
 		}
+		if(l!=p){
+			int t=a[p];a[p]=a[l];a[l]=t;
+		}
+		if(q==l){
+			q=p;
+		}
+		if(r!=q){
+			int t=a[q];a[q]=a[r];a[r]=t;
+		}
+		r--;l++;
 	}
 }
-#define MAX 20000
+
+
+void Sort_Insert(int a[], long n){
+	for(long i=1;i<n;i++){//升序
+		//查找插入位置
+		int l=0,r=i-1;
+		int m;
+		while(l<=r){
+			m=(l+r)/2;
+			if(a[m]<=a[i]){
+				l=m+1;
+			}else{
+				r=m-1;
+			}
+		}//要插入的位置是l
+		
+		//腾出空位
+		int t=a[i];
+		for(int j=i;j>l;j--){
+			a[j]=a[j-1];
+		}
+		a[l]=t;
+	}
+}
+#define MAX 50000
 int array[4][MAX];
 
 int main(){
@@ -80,7 +103,7 @@ int main(){
 	printf("---各种排序算法效果对比---\n");
 	printf("创建随机数据ing...\n");
 	printf("待排序数据总量: %d\n\n",MAX);
-	for(int i=0;i<MAX;i++){
+	for(long i=0;i<MAX;i++){
 		array[0][i]=rand()%10000;
 		array[1][i]=rand()%10000;
 		array[2][i]=rand()%10000;
