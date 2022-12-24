@@ -1,33 +1,46 @@
 #include<stdio.h>
+#include<time.h>
+#include<stdlib.h>
 
-void sort(int a[], int l,int r, int reverse = 0){
-	int sign;
-	if(reverse==0)sign=1;
-	else sign=-1;
-	
-	int i=l,j=r;
-	int key=a[(l+r)/2];
+void Sort_Quick(int a[], long l,long r){
+	long i=l,j=r;
+	long key=a[(l+r)/2];
 	while(i<=j){
-		while(sign*a[i]<sign*key)
+		while(a[i]<key)
 			i++;
-		while(sign*a[j]>sign*key)
+		while(a[j]>key)
 			j--;
 		if(i<=j){
 			int t=a[i];a[i]=a[j];a[j]=t;
 			i++;j--;
 		}
 	}
-	if(l<j) sort(a,l,j,reverse);
-	if(r>i) sort(a,i,r,reverse);
+	if(l<j) Sort_Quick(a,l,j);
+	if(r>i) Sort_Quick(a,i,r);
 }
 
+#define NUM 10000000
+int array[1][NUM];
+
 int main(){
-	int a[10]={13,8,74,9,6,78,25,74,13,84};
-	for(int i=0;i<10;i++){
-		printf("%d ",a[i]);
-	}printf("\n");
-	sort(a,0,9);
-	for(int i=0;i<10;i++){
-		printf("%d ",a[i]);
+	clock_t start, finish;
+	int delta;
+	srand(time(NULL));
+	
+	printf("---快速排序---\n");
+	printf("数据量：%d\n\n",NUM);
+	for(long i=0;i<NUM;i++){
+		array[0][i]=rand()%10000;
 	}
+	
+	start = clock();
+	Sort_Quick(array[0],0,NUM-1);
+	finish = clock();
+	delta=finish-start;
+	printf("快速排序运行时间: %d ms\n", delta);
+	
+	
+//	for(int i=0;i<NUM;i++){
+//		printf("%d ",array[0][i]);
+//	}
 }
