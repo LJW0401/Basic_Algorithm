@@ -80,7 +80,7 @@ int main(){
 	printf("冒泡排序改进1次运行时间: %d ms\n", delta);
 	
 	start = clock();
-	Sort_Bubble_II(array[2],15);
+	Sort_Bubble_II(array[2],MAX);
 	finish = clock();
 	delta=finish-start;
 	printf("冒泡排序改进2次运行时间: %d ms\n", delta);
